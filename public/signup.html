@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | LinkUp</title>
+  <link rel="stylesheet" href="/auth.css">
+</head>
+<body>
+  <main class="auth-container">
+    <section class="auth-card">
+      <a href="/" class="brand">LinkUp<span>.</span></a>
+      <p class="eyebrow">YOUR PEOPLE, ORGANIZED</p>
+      <h1>Create your account</h1>
+      <p class="subtitle">Start building meaningful connections.</p>
+
+      <form id="signupForm">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text"
+          placeholder="Enter your name" required>
+
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email"
+          placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password"
+          placeholder="At least 8 characters" minlength="8" required>
+
+        <button type="submit">Create account</button>
+        <p id="message" role="status"></p>
+      </form>
+
+      <p class="switch-link">
+        Already have an account? <a href="/login.html">Sign in</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="signup.js"></script>
+</body>
+</html>

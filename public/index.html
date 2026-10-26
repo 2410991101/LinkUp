@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f5ff" />
+  <title>LinkUp | Smart CRM</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-icon">LU</span> LinkUp</div>
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-item active" href="#"><span>▦</span> Overview</a>
+      <a class="nav-item" href="#contacts"><span>♙</span> Contacts</a>
+      <a class="nav-item" href="#followups"><span>◷</span> Follow-ups <span class="count">4</span></a>
+      <a class="nav-item" href="#analytics"><span>▥</span> Analytics</a>
+      <p class="nav-label second-label">PREFERENCES</p>
+      <a class="nav-item" href="#settings"><span>⚙</span> Settings</a>
+      <div class="sidebar-bottom">
+        <div class="avatar">JK</div>
+        <div><strong>My Workspace</strong><small>Personal account</small></div>
+        <span class="dots">•••</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="breadcrumb">Workspace <span>/</span> Overview</div>
+        <div class="top-actions">
+          <span class="status-dot"></span><span class="online">All changes saved</span>
+          <button class="icon-btn" aria-label="Notifications" type="button">♧</button>
+          <div class="avatar small-avatar">JK</div>
+        </div>
+      </header>
+
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">YOUR RELATIONSHIP HUB</p>
+          <h1 id="greeting">Good afternoon <span class="wave">👋</span></h1>
+          <p class="subtitle">Here's what's happening with your connections today.</p>
+        </div>
+        <button class="primary-btn" id="addContactBtn" type="button">＋ Add contact</button>
+      </section>
+
+      <section class="stats">
+        <article class="stat-card">
+          <div class="stat-top"><span>Total contacts</span><span class="stat-icon purple">♙</span></div>
+          <h2 id="totalContacts">248</h2>
+          <p class="stat-foot"><span class="positive">↗ 12%</span> <span>vs. last month</span></p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>New this month</span><span class="stat-icon green">✳</span></div>
+          <h2>36</h2>
+          <p class="stat-foot"><span class="positive">↗ 8.4%</span> <span>vs. last month</span></p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Follow-ups due</span><span class="stat-icon orange">◷</span></div>
+          <h2>04</h2>
+          <p class="stat-foot"><span class="due">Needs your attention</span></p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Companies</span><span class="stat-icon blue">▤</span></div>
+          <h2>72</h2>
+          <p class="stat-foot"><span>Across your network</span></p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel contacts-panel" id="contacts">
+          <div class="panel-heading">
+            <div><h3>Your contacts</h3><p>Manage and grow your network</p></div>
+            <button class="text-btn" id="viewAllBtn" type="button">View all ↗</button>
+          </div>
+          <div class="toolbar">
+            <div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search contacts..." /></div>
+            <select id="companyFilter" aria-label="Filter contacts by company">
+              <option value="">All companies</option>
+              <option value="Google">Google</option>
+              <option value="Microsoft">Microsoft</option>
+              <option value="Amazon">Amazon</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>NAME</th><th>COMPANY</th><th>STATUS</th><th></th></tr></thead>
+              <tbody id="contactsBody"></tbody>
+            </table>
+          </div>
+          <div class="table-footer"><span id="contactCount">Showing contacts</span><span>Updated just now</span></div>
+        </article>
+
+        <article class="panel activity-panel" id="followups">
+          <div class="panel-heading">
+            <div><h3>Upcoming follow-ups</h3><p>Don't let a connection go cold</p></div>
+            <span class="more">•••</span>
+          </div>
+          <div class="followup-list">
+            <div class="followup">
+              <div class="follow-icon lavender">✉</div>
+              <div class="follow-info"><strong>Priya Sharma</strong><p>Send project proposal</p><small>Today · 4:30 PM</small></div>
+              <span class="priority high"></span>
+            </div>
+            <div class="followup">
+              <div class="follow-icon mint">☏</div>
+              <div class="follow-info"><strong>Rahul Mehta</strong><p>Quick catch-up call</p><small>Tomorrow · 11:00 AM</small></div>
+              <span class="priority medium"></span>
+            </div>
+            <div class="followup">
+              <div class="follow-icon peach">↗</div>
+              <div class="follow-info"><strong>Ananya Kapoor</strong><p>Share portfolio</p><small>Oct 28 · 2:00 PM</small></div>
+              <span class="priority low"></span>
+            </div>
+            <div class="followup">
+              <div class="follow-icon sky">✉</div>
+              <div class="follow-info"><strong>Arjun Singh</strong><p>Reply to email</p><small>Oct 29 · 10:00 AM</small></div>
+              <span class="priority medium"></span>
+            </div>
+          </div>
+          <button class="secondary-btn" id="followupBtn" type="button">View all reminders →</button>
+        </article>
+      </section>
+
+      <footer>Made for meaningful connections. <span>LINKUP © 2026</span></footer>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="contactModal">
+    <form class="modal-card" id="contactForm">
+      <button type="button" class="modal-close" id="closeModal" aria-label="Close form">×</button>
+      <p class="eyebrow">GROW YOUR NETWORK</p>
+      <h2>Add a new contact</h2>
+      <label>Full name<input name="name" required placeholder="e.g. Aisha Sharma" /></label>
+      <label>Email<input name="email" type="email" placeholder="aisha@example.com" /></label>
+      <label>Company<input name="company" placeholder="Company name" /></label>
+      <label>Designation<input name="role" placeholder="e.g. Software Engineer" /></label>
+      <button class="primary-btn submit-btn" type="submit">Save contact</button>
+    </form>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/script.js"></script>
+</body>
+</html>

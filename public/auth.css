@@ -1,0 +1,375 @@
+
+/* ==============================
+   CONNECTLY — AUTHENTICATION UI
+   Soft lavender, pink & glassmorphism
+================================ */
+
+:root {
+  --purple: #7652ed;
+  --purple-dark: #5b38d9;
+  --pink: #f5dfff;
+  --lavender: #eee8ff;
+  --ink: #22203d;
+  --muted: #85839d;
+  --border: #eae5f7;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  padding: 28px 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+
+  background:
+    radial-gradient(ellipse at 10% 10%, #f4dfff 0, transparent 37%),
+    radial-gradient(ellipse at 90% 15%, #dce5ff 0, transparent 35%),
+    radial-gradient(ellipse at 55% 100%, #fce7f4 0, transparent 38%),
+    #faf8ff;
+}
+
+/* Floating decorative bubbles */
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: floatBubble 10s ease-in-out infinite alternate;
+}
+
+body::before {
+  width: 260px;
+  height: 260px;
+  left: -100px;
+  top: 8%;
+  background: linear-gradient(135deg, #d9c8ff99, #f7d8f899);
+}
+
+body::after {
+  width: 320px;
+  height: 320px;
+  right: -130px;
+  bottom: 2%;
+  background: linear-gradient(135deg, #d6e1ff99, #ead9ff99);
+  animation-delay: -4s;
+}
+
+@keyframes floatBubble {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(22px, -28px) scale(1.08);
+  }
+}
+
+/* Auth page layout */
+
+.auth-container,
+.auth-wrapper,
+.auth-page,
+.auth-card,
+.auth-box,
+.auth-form-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Main card */
+
+.auth-card,
+.auth-box,
+.auth-wrapper {
+  width: min(100%, 450px);
+  margin: auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  box-shadow:
+    0 25px 70px rgba(87, 59, 157, 0.12),
+    0 4px 15px rgba(87, 59, 157, 0.05);
+
+  animation: cardEnter 0.8s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Logo */
+
+.logo,
+.auth-logo,
+.brand {
+  color: var(--purple);
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+}
+
+/* Headings */
+
+h1,
+h2,
+.auth-title {
+  color: var(--ink);
+  letter-spacing: -1px;
+  line-height: 1.25;
+}
+
+h1,
+.auth-title {
+  font-size: clamp(27px, 5vw, 34px);
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.auth-subtitle,
+.subtitle,
+.description {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 27px;
+}
+
+/* Form layout */
+
+form {
+  width: 100%;
+}
+
+form label {
+  display: block;
+  margin: 17px 0 8px;
+  color: #494661;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+form input {
+  width: 100%;
+  min-height: 49px;
+  padding: 13px 15px;
+
+  border: 1px solid #e6e1f2;
+  border-radius: 13px;
+  outline: none;
+
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  font: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    background 0.25s,
+    transform 0.25s;
+}
+
+form input::placeholder {
+  color: #b0adc1;
+}
+
+form input:hover {
+  border-color: #cfc1ff;
+}
+
+form input:focus {
+  border-color: var(--purple);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(118, 82, 237, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Buttons */
+
+form button,
+.auth-btn,
+button[type="submit"] {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 25px;
+  padding: 14px 20px;
+
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #916dff, #6742e4);
+  color: white;
+
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+
+  box-shadow: 0 9px 22px rgba(112, 72, 239, 0.25);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s,
+    filter 0.25s;
+}
+
+form button:hover,
+.auth-btn:hover,
+button[type="submit"]:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.04);
+  box-shadow: 0 14px 28px rgba(112, 72, 239, 0.32);
+}
+
+form button:active,
+.auth-btn:active,
+button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Links */
+
+a {
+  color: var(--purple);
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--purple-dark);
+}
+
+/* Signup/login switch text */
+
+.auth-footer,
+.auth-switch,
+form + p {
+  margin-top: 23px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.auth-footer a,
+.auth-switch a,
+form + p a {
+  font-weight: 750;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #a991ff;
+  outline-offset: 4px;
+}
+
+/* Toasts and feedback messages */
+
+#message,
+#successMessage,
+#errorMessage,
+.message {
+  margin-top: 15px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Responsive layout */
+
+@media (max-width: 520px) {
+  body {
+    padding: 20px 14px;
+  }
+
+  .auth-card,
+  .auth-box,
+  .auth-wrapper {
+    padding: 29px 23px;
+    border-radius: 23px;
+  }
+
+  .logo,
+  .auth-logo,
+  .brand {
+    font-size: 24px;
+  }
+
+  h1,
+  .auth-title {
+    font-size: 29px;
+  }
+
+  body::before {
+    width: 180px;
+    height: 180px;
+  }
+
+  body::after {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* Respect reduced motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+#message.error-message {
+  color: #dc2626 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+#message.success-message {
+  color: #16a34a !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}

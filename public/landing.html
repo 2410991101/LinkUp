@@ -1,0 +1,1295 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description"
+        content="LinkUp helps you organize, manage and keep track of your important contacts.">
+
+  <title>LinkUp — Every Connection Matters</title>
+
+  <style>
+    :root {
+      --purple: #7048ef;
+      --purple-dark: #5635d5;
+      --ink: #191936;
+      --muted: #70718a;
+      --border: #e9e5f8;
+      --white: #ffffff;
+      --surface: #fbfaff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--surface);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Animated background */
+
+    .background-art {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 15% 15%, #eee9ff 0, transparent 36%),
+        radial-gradient(ellipse at 88% 32%, #e4edff 0, transparent 35%),
+        #fbfaff;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      animation: float 11s ease-in-out infinite alternate;
+    }
+
+    .orb-one {
+      width: 300px;
+      height: 300px;
+      background: #e8dfff;
+      opacity: .48;
+      top: 16%;
+      left: -180px;
+    }
+
+    .orb-two {
+      width: 380px;
+      height: 380px;
+      background: #dce8ff;
+      opacity: .5;
+      right: -240px;
+      top: 45%;
+      animation-delay: -4s;
+    }
+
+    .orb-three {
+      width: 180px;
+      height: 180px;
+      background: #f2ddff;
+      opacity: .5;
+      right: 12%;
+      top: 8%;
+      animation-delay: -6s;
+    }
+
+    .dot-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: .23;
+      background-image: radial-gradient(#9888d9 1px, transparent 1px);
+      background-size: 27px 27px;
+      mask-image: linear-gradient(to bottom, black, transparent 70%);
+    }
+
+    @keyframes float {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      to {
+        transform: translate3d(25px, -35px, 0) scale(1.08);
+      }
+    }
+
+    /* Navigation */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 17px 7%;
+      background: rgba(255, 255, 255, .83);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(230, 224, 250, .8);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--ink);
+    }
+
+    .logo-icon {
+      display: grid;
+      place-items: center;
+      width: 39px;
+      height: 39px;
+      color: white;
+      background: linear-gradient(135deg, #9777ff, #5937dc);
+      border-radius: 13px;
+      box-shadow: 0 7px 18px #7048ef35;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-links a:not(.login-btn) {
+      color: #62627c;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color .2s;
+    }
+
+    .nav-links a:not(.login-btn):hover {
+      color: var(--purple);
+    }
+
+    .login-btn {
+      padding: 10px 25px;
+      border: 1px solid #b9a7ff;
+      color: var(--purple);
+      border-radius: 30px;
+      font-weight: 700;
+      transition: background .25s, color .25s, transform .25s;
+    }
+
+    .login-btn:hover {
+      background: var(--purple);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Buttons */
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 31px;
+      color: white;
+      background: linear-gradient(120deg, #8058fa, #5a37de);
+      border: 0;
+      border-radius: 16px;
+      font-weight: 750;
+      box-shadow: 0 12px 27px #7048ef36;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 17px 32px #7048ef4d;
+    }
+
+    .primary-btn:active {
+      transform: scale(.96);
+    }
+
+    .arrow {
+      display: inline-block;
+      transition: transform .25s;
+    }
+
+    .primary-btn:hover .arrow {
+      transform: translateX(5px);
+    }
+
+    /* Hero section */
+
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 92px 20px 48px;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 17px;
+      background: rgba(238, 231, 255, .92);
+      border: 1px solid #e4d9ff;
+      border-radius: 40px;
+      color: #6946df;
+      font-size: 13px;
+      font-weight: 750;
+      animation: enter .8s .05s both;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8b63f6;
+      box-shadow: 0 0 0 4px #8b63f622;
+    }
+
+    h1 {
+      margin: 27px auto 23px;
+      max-width: 850px;
+      font-size: clamp(43px, 6.3vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -3.5px;
+      font-weight: 850;
+      animation: enter .9s .2s both;
+    }
+
+    .gradient-text {
+      color: var(--purple);
+      background: linear-gradient(100deg, #9a63f6, #5636db);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.85;
+      animation: enter .9s .4s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 17px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      animation: enter .9s .55s both;
+    }
+
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 24px;
+      border: 1px solid #e4def8;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .8);
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .25s, border-color .25s;
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+      border-color: #a997fa;
+    }
+
+    .trust-note {
+      margin-top: 20px;
+      color: #85839b;
+      font-size: 12px;
+      animation: enter .9s .7s both;
+    }
+
+    /* Dashboard preview */
+
+    .preview-wrap {
+      position: relative;
+      width: min(920px, 91%);
+      margin: 48px auto 0;
+      padding: 13px;
+      border: 1px solid #dcd4ff;
+      border-radius: 23px;
+      background: rgba(255, 255, 255, .75);
+      box-shadow:
+        0 30px 80px #5140a21b,
+        0 4px 14px #5140a20c;
+      animation: previewEnter 1s .65s both;
+    }
+
+    .preview-topbar {
+      height: 27px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-left: 7px;
+    }
+
+    .window-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d6cdfb;
+    }
+
+    .dashboard-preview {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      min-height: 305px;
+      overflow: hidden;
+      border: 1px solid #f0edf9;
+      border-radius: 14px;
+      background: white;
+    }
+
+    .preview-sidebar {
+      padding: 24px 15px;
+      color: white;
+      background: linear-gradient(155deg, #30245f, #242450);
+    }
+
+    .sidebar-brand {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 30px;
+    }
+
+    .side-item {
+      padding: 11px 10px;
+      margin: 6px 0;
+      border-radius: 9px;
+      color: #d8d1f6;
+      font-size: 12px;
+    }
+
+    .side-item.active {
+      color: white;
+      background: #765be9;
+    }
+
+    .preview-main {
+      min-width: 0;
+      padding: 22px;
+    }
+
+    .preview-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 19px;
+    }
+
+    .preview-heading h3 {
+      font-size: 18px;
+    }
+
+    .preview-add {
+      padding: 9px 13px;
+      border: none;
+      border-radius: 9px;
+      color: white;
+      background: var(--purple);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .preview-search {
+      padding: 10px 12px;
+      border: 1px solid #eeebf6;
+      border-radius: 9px;
+      color: #9a98af;
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 35px 1fr auto;
+      align-items: center;
+      gap: 11px;
+      padding: 12px 5px;
+      border-bottom: 1px solid #f1eff7;
+    }
+
+    .contact-avatar {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #ece5ff;
+      color: #6848df;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .contact-row:nth-child(3) .contact-avatar {
+      background: #dcf5ec;
+      color: #25876c;
+    }
+
+    .contact-row:nth-child(4) .contact-avatar {
+      background: #ffeadf;
+      color: #c76b47;
+    }
+
+    .contact-info strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .contact-info small {
+      display: block;
+      margin-top: 4px;
+      color: #9290a7;
+      font-size: 10px;
+    }
+
+    .company-tag {
+      color: #79768e;
+      font-size: 10px;
+    }
+
+    .floating-note {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 15px 18px;
+      border: 1px solid #e9e1ff;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .95);
+      box-shadow: 0 14px 40px #4a34851a;
+      animation: float 5s ease-in-out infinite alternate;
+    }
+
+    .note-left {
+      left: -95px;
+      bottom: 70px;
+    }
+
+    .note-right {
+      right: -95px;
+      top: 80px;
+      animation-delay: -2s;
+    }
+
+    .note-icon {
+      display: grid;
+      place-items: center;
+      width: 37px;
+      height: 37px;
+      border-radius: 12px;
+      background: #eee8ff;
+      font-size: 19px;
+    }
+
+    .floating-note strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .floating-note small {
+      display: block;
+      margin-top: 5px;
+      color: #85839b;
+      font-size: 10px;
+    }
+
+    /* Section headings */
+
+    .section {
+      padding: 72px 7% 85px;
+    }
+
+    .section-heading {
+      max-width: 650px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .section-label {
+      color: var(--purple);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 800;
+    }
+
+    .section-heading h2 {
+      margin: 14px 0;
+      font-size: clamp(30px, 4vw, 43px);
+      letter-spacing: -1.5px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* Feature cards */
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 27px;
+      text-align: left;
+      border: 1px solid #eae5f8;
+      border-radius: 21px;
+      background: rgba(255, 255, 255, .86);
+      box-shadow: 0 8px 30px #2c205508;
+      cursor: pointer;
+      transition:
+        transform .3s,
+        box-shadow .3s,
+        border-color .3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: #c5b4ff;
+      box-shadow: 0 20px 40px #5940a21a;
+    }
+
+    .feature-card:active {
+      transform: scale(.98);
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 55px;
+      height: 55px;
+      margin-bottom: 23px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #f0eaff, #e5eaff);
+      font-size: 25px;
+      transition: transform .3s;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotate(-7deg) scale(1.08);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 11px;
+      font-size: 19px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .learn-more {
+      display: inline-block;
+      margin-top: 19px;
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    /* Bottom call to action */
+
+    .bottom-cta {
+      position: relative;
+      max-width: 1080px;
+      margin: 0 auto 80px;
+      padding: 65px 25px;
+      overflow: hidden;
+      text-align: center;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 0% 100%, #9574ff, transparent 40%),
+        linear-gradient(120deg, #32245f, #5638b8 65%, #7751e9);
+      color: white;
+      box-shadow: 0 22px 55px #48318c2b;
+    }
+
+    .bottom-cta h2 {
+      position: relative;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -1px;
+      margin-bottom: 15px;
+    }
+
+    .bottom-cta p {
+      position: relative;
+      max-width: 530px;
+      margin: 0 auto;
+      color: #e1dafa;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .bottom-cta .primary-btn {
+      position: relative;
+      margin-top: 25px;
+      color: #5234c7;
+      background: white;
+      box-shadow: none;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 25px 7%;
+      border-top: 1px solid #eae6f5;
+      background: rgba(255, 255, 255, .75);
+      color: #85839b;
+      font-size: 12px;
+    }
+
+    footer a {
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    /* Scroll reveal animation */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes previewEnter {
+      from {
+        opacity: 0;
+        transform: translateY(35px) scale(.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Feature popup */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(25, 19, 52, .48);
+      backdrop-filter: blur(7px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s, visibility .25s;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      position: relative;
+      width: min(440px, 100%);
+      padding: 34px;
+      border: 1px solid #eee8ff;
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 25px 80px #17102b40;
+      transform: translateY(20px) scale(.96);
+      transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .modal.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: #faf9ff;
+      color: var(--ink);
+      font-size: 21px;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .modal-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .modal-icon {
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      margin-bottom: 22px;
+      border-radius: 18px;
+      background: #eee8ff;
+      font-size: 28px;
+    }
+
+    .modal-box h3 {
+      margin-bottom: 12px;
+      font-size: 25px;
+    }
+
+    .modal-box p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .modal-box .primary-btn {
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    /* Responsive design */
+
+    @media (max-width: 1000px) {
+      .note-left {
+        left: -15px;
+        bottom: -45px;
+      }
+
+      .note-right {
+        right: -15px;
+        top: -35px;
+      }
+
+      .preview-wrap {
+        margin-bottom: 45px;
+      }
+
+      .features-grid {
+        gap: 15px;
+      }
+
+      .feature-card {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      nav {
+        padding: 14px 5%;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .logo-icon {
+        width: 34px;
+        height: 34px;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links .optional {
+        display: none;
+      }
+
+      .login-btn {
+        padding: 9px 17px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding: 72px 20px 30px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+        font-size: clamp(39px, 9vw, 58px);
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        gap: 12px;
+      }
+
+      .primary-btn {
+        padding: 15px 22px;
+      }
+
+      .preview-wrap {
+        width: 95%;
+        padding: 8px;
+        border-radius: 16px;
+        margin-top: 40px;
+      }
+
+      .dashboard-preview {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-sidebar {
+        display: none;
+      }
+
+      .preview-main {
+        padding: 13px;
+      }
+
+      .preview-heading h3 {
+        font-size: 15px;
+      }
+
+      .preview-add {
+        font-size: 10px;
+        padding: 8px;
+      }
+
+      .contact-row {
+        grid-template-columns: 32px 1fr;
+      }
+
+      .company-tag {
+        display: none;
+      }
+
+      .floating-note {
+        display: none;
+      }
+
+      .section {
+        padding: 60px 5% 65px;
+      }
+
+      .section-heading {
+        margin-bottom: 28px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .feature-card {
+        padding: 23px;
+      }
+
+      .feature-icon {
+        margin-bottom: 17px;
+      }
+
+      .bottom-cta {
+        margin: 0 5% 50px;
+        padding: 48px 22px;
+        border-radius: 23px;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px 5%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Decorative background -->
+  <div class="background-art" aria-hidden="true">
+    <div class="dot-pattern"></div>
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <a class="logo" href="#home" aria-label="LinkUp home">
+      <span class="logo-icon">✦</span>
+      LinkUp
+    </a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a class="optional" href="#features">Features</a>
+      <a class="optional" href="#about">About</a>
+      <a class="login-btn" href="/login.html">Login</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          <span class="status-dot"></span>
+          Your smarter way to stay connected
+        </div>
+
+        <h1>
+          Every Connection.<br>
+          <span class="gradient-text">One Beautiful Place.</span>
+        </h1>
+
+        <p class="hero-description">
+          Meet LinkUp — your personal contact management space.
+          Organize people, keep important details at your fingertips,
+          and spend less time searching and more time connecting.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/signup.html" class="primary-btn">
+            Get Started <span class="arrow">→</span>
+          </a>
+
+          <a href="#features" class="secondary-btn">
+            Explore Features ↓
+          </a>
+        </div>
+
+        <p class="trust-note">
+          ✦ Simple to use &nbsp; · &nbsp; ✦ Organized by you
+          &nbsp; · &nbsp; ✦ Built for connections
+        </p>
+
+      </div>
+
+      <!-- Decorative dashboard preview -->
+      <div class="preview-wrap">
+        <div class="preview-topbar">
+          <span class="window-dot"></span>
+          <span class="window-dot"></span>
+          <span class="window-dot"></span>
+        </div>
+
+        <div class="dashboard-preview">
+
+          <aside class="preview-sidebar">
+            <div class="sidebar-brand">✦ LinkUp</div>
+            <div class="side-item active">♧ &nbsp; Contacts</div>
+            <div class="side-item">⌂ &nbsp; Dashboard</div>
+            <div class="side-item">▦ &nbsp; Reminders</div>
+            <div class="side-item">⚙ &nbsp; Settings</div>
+          </aside>
+
+          <div class="preview-main">
+            <div class="preview-heading">
+              <h3>Your connections</h3>
+              <span class="preview-add">+ Add Contact</span>
+            </div>
+
+            <div class="preview-search">⌕ &nbsp; Search your contacts...</div>
+
+            <div class="contact-row">
+              <div class="contact-avatar">SJ</div>
+              <div class="contact-info">
+                <strong>Sarah Johnson</strong>
+                <small>sarah@company.com</small>
+              </div>
+              <span class="company-tag">Google</span>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-avatar">MC</div>
+              <div class="contact-info">
+                <strong>Michael Chen</strong>
+                <small>michael@techcorp.com</small>
+              </div>
+              <span class="company-tag">TechCorp</span>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-avatar">ED</div>
+              <div class="contact-info">
+                <strong>Emily Davis</strong>
+                <small>emily@designco.com</small>
+              </div>
+              <span class="company-tag">DesignCo</span>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-avatar">DW</div>
+              <div class="contact-info">
+                <strong>David Wilson</strong>
+                <small>david@startup.io</small>
+              </div>
+              <span class="company-tag">Startup.io</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="floating-note note-left">
+          <div class="note-icon">✧</div>
+          <div>
+            <strong>Stay organized</strong>
+            <small>Your people, in one place</small>
+          </div>
+        </div>
+
+        <div class="floating-note note-right">
+          <div class="note-icon">♡</div>
+          <div>
+            <strong>Connections matter</strong>
+            <small>Make every detail count</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+
+      <div class="section-heading reveal">
+        <span class="section-label">Made for your everyday</span>
+        <h2>Less searching. More connecting.</h2>
+        <p>
+          Everything you need to keep your contact list organized,
+          without unnecessary complexity.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <button class="feature-card reveal"
+          data-title="Contact Management"
+          data-icon="👥"
+          data-description="Add, edit and manage contact names, email addresses, companies and roles. Keep important details organized in one convenient place.">
+
+          <span class="feature-icon">👥</span>
+          <h3>Contact Management</h3>
+          <p>
+            Keep names, emails, companies and roles together
+            instead of scattered across different places.
+          </p>
+          <span class="learn-more">Discover more ↗</span>
+        </button>
+
+        <button class="feature-card reveal"
+          data-title="Quick Search"
+          data-icon="🔎"
+          data-description="Find contacts by their name, email, company or role. Use search and company filters to get to the right information faster.">
+
+          <span class="feature-icon">🔎</span>
+          <h3>Find Anyone Faster</h3>
+          <p>
+            Search your list and filter contacts by company
+            to find the person you need.
+          </p>
+          <span class="learn-more">Discover more ↗</span>
+        </button>
+
+        <button class="feature-card reveal"
+          data-title="Personal Account"
+          data-icon="🔐"
+          data-description="Create an account and sign in to access your own contact list. LinkUp uses authentication to associate your contacts with your account.">
+
+          <span class="feature-icon">🔐</span>
+          <h3>Your Personal Space</h3>
+          <p>
+            Sign in to access your own contacts and keep
+            your list separate from other users.
+          </p>
+          <span class="learn-more">Discover more ↗</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- Final call to action -->
+    <section class="bottom-cta reveal" id="about">
+      <h2>Ready to get organized?</h2>
+      <p>
+        Start building your personal contact list today.
+        Your next important connection is only a click away.
+      </p>
+
+      <a href="/signup.html" class="primary-btn">
+        Create Your Account <span class="arrow">→</span>
+      </a>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 LinkUp. Every connection matters.</span>
+    <a href="#home">Back to top ↑</a>
+  </footer>
+
+  <!-- Interactive feature popup -->
+  <div class="modal" id="featureModal"
+       role="dialog" aria-modal="true"
+       aria-labelledby="modalTitle"
+       aria-hidden="true">
+
+    <div class="modal-box">
+      <button class="modal-close" id="closeModal"
+              aria-label="Close popup">×</button>
+
+      <div class="modal-icon" id="modalIcon">✨</div>
+      <h3 id="modalTitle">Feature title</h3>
+      <p id="modalDescription">Feature details appear here.</p>
+
+      <a href="/signup.html" class="primary-btn">
+        Get Started <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Reveal elements as they enter the screen
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12
+      });
+
+      revealElements.forEach((element, index) => {
+        element.style.transitionDelay = `${(index % 3) * 100}ms`;
+        observer.observe(element);
+      });
+    } else {
+      revealElements.forEach(element => {
+        element.classList.add("visible");
+      });
+    }
+
+    // Feature cards open a popup
+    const modal = document.getElementById("featureModal");
+    const modalIcon = document.getElementById("modalIcon");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeModalButton = document.getElementById("closeModal");
+
+    let previousFocus = null;
+
+    function openFeatureModal(card) {
+      previousFocus = card;
+
+      modalIcon.textContent = card.dataset.icon;
+      modalTitle.textContent = card.dataset.title;
+      modalDescription.textContent = card.dataset.description;
+
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      closeModalButton.focus();
+    }
+
+    function closeFeatureModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+
+      if (previousFocus) {
+        previousFocus.focus();
+      }
+    }
+
+    document.querySelectorAll(".feature-card").forEach(card => {
+      card.addEventListener("click", () => {
+        openFeatureModal(card);
+      });
+    });
+
+    closeModalButton.addEventListener("click", closeFeatureModal);
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) {
+        closeFeatureModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && modal.classList.contains("open")) {
+        closeFeatureModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
