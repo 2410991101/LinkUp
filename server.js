@@ -1,3 +1,4 @@
+
 const authRoutes = require("./routes/authRoutes");
 require("dotenv").config();
 
@@ -5,12 +6,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const contactRoutes = require("./routes/contactRoutes");
+const followUpRoutes = require("./routes/followUpRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
 app.use("/api/auth", authRoutes);
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "landing.html"));
 });
@@ -18,6 +22,7 @@ app.get("/", (req, res) => {
 app.get("/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api/health", (req, res) => {
@@ -30,6 +35,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/contacts", contactRoutes);
+app.use("/api/followups", followUpRoutes);
 
 async function startServer() {
   try {
